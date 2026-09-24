@@ -1,0 +1,81 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: slatargets.pathly.pathlyhq.com
+spec:
+  group: pathly.pathlyhq.com
+  names:
+    categories: [crossplane, managed, pathly]
+    kind: SlaTarget
+    listKind: SlaTargetList
+    plural: slatargets
+    singular: slatarget
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: [forProvider]
+              properties:
+                deletionPolicy:
+                  type: string
+                managementPolicies:
+                  type: array
+                  items:
+                    type: string
+                providerConfigRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required: [name]
+                writeConnectionSecretToRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                forProvider:
+                  type: object
+                  required: [objectivePct, windowDays]
+                  properties:
+                    monitorId:
+                      type: string
+                    name:
+                      type: string
+                    objectivePct:
+                      type: number
+                    windowDays:
+                      type: integer
+                      format: int64
+                    excludeMaintenance:
+                      type: boolean
+                    warnAtBudgetRatio:
+                      type: number
+                    enabled:
+                      type: boolean
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: READY
+          type: string
+          jsonPath: .status.conditions[?(@.type=='Ready')].status
+        - name: SYNCED
+          type: string
+          jsonPath: .status.conditions[?(@.type=='Synced')].status
+        - name: EXTERNAL-NAME
+          type: string
+          jsonPath: .metadata.annotations['crossplane.io/external-name']
+        - name: AGE
+          type: date
+          jsonPath: .metadata.creationTimestamp

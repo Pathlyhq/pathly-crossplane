@@ -1,0 +1,52 @@
+# Binaries
+bin/
+*.exe
+*.test
+*.out
+
+# Coverage
+covclient.txt
+covall.txt
+coverage.out
+coverage-client.out
+coverage-client
+coverage.html
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local secrets / env
+.env
+*.pem
+credentials.json
+
+# Go
+vendor/
+
+# bootstrap safety
+.env
+.env.*
+!.env.example
+node_modules/
+vendor/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+dist/
+lib/
+bin/
+*.egg-info/
+.DS_Store
+.idea/
+.vscode/
+
+.env
+.env.*

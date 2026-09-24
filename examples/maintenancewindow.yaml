@@ -1,0 +1,17 @@
+# Pathly Crossplane — Maintenance window example
+#
+# Product: https://pathlyhq.com · API: https://pathlyhq.com/en/developers
+# Auth: ProviderConfig → Secret holding PATHLY_API_TOKEN (see providerconfig.yaml).
+apiVersion: pathly.pathlyhq.com/v1alpha1
+kind: MaintenanceWindow
+metadata:
+  name: saturday-morning
+spec:
+  providerConfigRef:
+    name: default
+  forProvider:
+    # monitorId: mon-xxxxx   # omit for org-wide
+    weekday: 6
+    startMinute: 120
+    durationMin: 90
+    reason: Weekly platform maintenance

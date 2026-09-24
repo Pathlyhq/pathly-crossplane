@@ -1,0 +1,73 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: webhooks.pathly.pathlyhq.com
+spec:
+  group: pathly.pathlyhq.com
+  names:
+    categories: [crossplane, managed, pathly]
+    kind: Webhook
+    listKind: WebhookList
+    plural: webhooks
+    singular: webhook
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: [forProvider]
+              properties:
+                deletionPolicy:
+                  type: string
+                managementPolicies:
+                  type: array
+                  items:
+                    type: string
+                providerConfigRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required: [name]
+                writeConnectionSecretToRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    namespace:
+                      type: string
+                forProvider:
+                  type: object
+                  required: [url]
+                  properties:
+                    url:
+                      type: string
+                      minLength: 1
+                    events:
+                      type: array
+                      items:
+                        type: string
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: READY
+          type: string
+          jsonPath: .status.conditions[?(@.type=='Ready')].status
+        - name: SYNCED
+          type: string
+          jsonPath: .status.conditions[?(@.type=='Synced')].status
+        - name: EXTERNAL-NAME
+          type: string
+          jsonPath: .metadata.annotations['crossplane.io/external-name']
+        - name: AGE
+          type: date
+          jsonPath: .metadata.creationTimestamp

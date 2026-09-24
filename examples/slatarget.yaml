@@ -1,0 +1,19 @@
+# Pathly Crossplane — SLA target example
+#
+# Product: https://pathlyhq.com · API: https://pathlyhq.com/en/developers
+# Auth: ProviderConfig → Secret holding PATHLY_API_TOKEN (see providerconfig.yaml).
+apiVersion: pathly.pathlyhq.com/v1alpha1
+kind: SlaTarget
+metadata:
+  name: checkout-sla
+spec:
+  providerConfigRef:
+    name: default
+  forProvider:
+    # monitorId: mon-xxxxx   # Pathly scenario id from status / console
+    name: Checkout 99.9
+    objectivePct: 99.9
+    windowDays: 30
+    excludeMaintenance: true
+    warnAtBudgetRatio: 0.8
+    enabled: true

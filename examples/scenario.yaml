@@ -1,0 +1,29 @@
+# Pathly Crossplane — HTTP scenario example
+#
+# Product: https://pathlyhq.com
+# API docs: https://pathlyhq.com/en/developers
+# Token: create PATHLY_API_TOKEN in the console, store it in a Secret,
+#        then reference it from ProviderConfig (see providerconfig.yaml).
+#
+# HTTP scenario only — browser journeys are not managed by this provider
+# (credentials must not land in etcd). Manage browsers at https://pathlyhq.com
+apiVersion: pathly.pathlyhq.com/v1alpha1
+kind: Scenario
+metadata:
+  name: checkout-http
+spec:
+  providerConfigRef:
+    name: default
+  forProvider:
+    name: Checkout HTTP
+    type: http
+    url: https://shop.example.com/health
+    method: GET
+    expectedStatus: 200
+    intervalSec: 300
+    maxLatencyMs: 2000
+    regions:
+      - europe-west1
+    tags:
+      - production
+    enabled: true

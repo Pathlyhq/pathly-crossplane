@@ -1,0 +1,42 @@
+stages:
+  - test
+  - build
+
+variables:
+  GOPATH: $CI_PROJECT_DIR/.go
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .go/pkg/mod/
+
+.go-cache: &go-cache
+  before_script:
+    - go version
+    - go env -w GOPROXY=https://proxy.golang.org,direct
+
+unit-test:
+  stage: test
+  image: golang:1.22
+  <<: *go-cache
+  script:
+    - go mod tidy
+    - go test ./internal/client/ -coverprofile=covclient.txt -covermode=atomic -count=1
+    - go tool cover -func=covclient.txt
+    - go test ./... -count=1
+  artifacts:
+    when: always
+    paths:
+      - covclient.txt
+    expire_in: 1 week
+
+build:
+  stage: build
+  image: golang:1.22
+  <<: *go-cache
+  script:
+    - go build -o bin/provider ./cmd/provider
+  artifacts:
+    paths:
+      - bin/provider
+    expire_in: 1 week

@@ -1,0 +1,20 @@
+# Pathly Crossplane — Webhook example
+#
+# Product: https://pathlyhq.com · API: https://pathlyhq.com/en/developers
+# Auth: ProviderConfig → Secret holding PATHLY_API_TOKEN (see providerconfig.yaml).
+apiVersion: pathly.pathlyhq.com/v1alpha1
+kind: Webhook
+metadata:
+  name: slack-alerts
+spec:
+  providerConfigRef:
+    name: default
+  writeConnectionSecretToRef:
+    name: pathly-webhook-slack
+    namespace: crossplane-system
+  forProvider:
+    url: https://hooks.example.com/services/XXX
+    events:
+      - run.failed
+      - incident.opened
+      - incident.resolved

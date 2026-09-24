@@ -1,0 +1,26 @@
+# Pathly Crossplane — ProviderConfig + Secret for PATHLY_API_TOKEN
+#
+# 1. Create an API token at https://pathlyhq.com (docs: https://pathlyhq.com/en/developers)
+# 2. Put it in the Secret below (key: token). Never commit a real token.
+# 3. ProviderConfig reads that Secret — same value as env PATHLY_API_TOKEN elsewhere.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pathly-creds
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  # Replace with your PATHLY_API_TOKEN from https://pathlyhq.com
+  token: "sp_REPLACE_ME"
+---
+apiVersion: pathly.pathlyhq.com/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentialsSource: Secret
+  credentialsSecretRef:
+    namespace: crossplane-system
+    name: pathly-creds
+    key: token
+  # baseURL: https://api.pathlyhq.com

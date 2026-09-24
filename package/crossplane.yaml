@@ -1,0 +1,16 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-pathly
+  annotations:
+    meta.crossplane.io/maintainer: Simon Raynaud / keyral (Pathly) <dev@pathlyhq.com>
+    meta.crossplane.io/source: https://github.com/pathlyhq/pathly-crossplane
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      Crossplane provider for Pathly (https://pathlyhq.com) — API https://api.pathlyhq.com.
+      Company: Pathly. Author: Simon Raynaud / keyral.
+    meta.crossplane.io/readme: |
+      Manages Pathly HTTP scenarios, webhooks, maintenance windows and SLA targets.
+spec:
+  crossplane:
+    version: ">=1.14.0"
