@@ -56,7 +56,7 @@ Module : `github.com/pathlyhq/pathly-crossplane`
 | Package | Role |
 |---|---|
 | [pathly-k8s-operator](https://github.com/pathlyhq/pathly-k8s-operator) | Kubernetes operator |
-| [pathly-terraform-provider](https://github.com/pathlyhq/pathly-terraform-provider) | Terraform / OpenTofu |
+| [terraform-provider-pathly](https://github.com/Pathlyhq/terraform-provider-pathly) | Terraform / OpenTofu |
 | [pathly-sdk-go](https://github.com/pathlyhq/pathly-sdk-go) | Go SDK |
 | [pathly-pulumi](https://github.com/pathlyhq/pathly-pulumi) | Pulumi |
 | [Pathly product](https://pathlyhq.com) | [Pathly monitoring](https://pathlyhq.com) |
